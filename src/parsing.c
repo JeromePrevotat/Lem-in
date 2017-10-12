@@ -26,11 +26,14 @@ void	parsing(void)
 	free(line);
 	while (room_list->prev != NULL)
 		room_list = room_list->prev;
-	while (room_list != NULL)
+	printf("ROOMLIST :\n");
+	while (room_list->next != NULL)
 	{
-		printf("Room : >%s<\n", room_list->room->name);
+		printf(">%s<\n", room_list->room->name);
 		room_list = room_list->next;
 	}
+	printf(">%s<\n\n", room_list->room->name);
+	free_room_list(room_list);
 }
 
 int		get_line_type(char *line, t_room_list **room_list)

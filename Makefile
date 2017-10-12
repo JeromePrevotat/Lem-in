@@ -7,6 +7,7 @@ NAME = lem-in
 SRCS += ./src/main.c
 SRCS += ./src/parsing.c
 SRCS += ./src/utils.c
+SRCS += ./src/free_ressources.c
 
 INC += ./inc/lemin.h
 

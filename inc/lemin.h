@@ -56,4 +56,7 @@ int		check_name(char *name, t_room_list **room_list);
 //Utils.c
 void	error(void);
 
+//Free_ressources.c
+void	free_room_list(t_room_list *room_list);
+
 #endif
