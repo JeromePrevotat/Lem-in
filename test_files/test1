@@ -1,0 +1,9 @@
+#nb ants
+1
+#rooms
+##start
+a 0 0
+##end
+b 1 0
+#pipes
+a-b
