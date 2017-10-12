@@ -33,15 +33,25 @@ typedef struct	s_room
 	int			y;
 }				t_room;
 
+typedef struct	s_room_list
+{
+	struct s_room_list	*prev;
+	struct s_room_list	*next;
+	t_room				*room;
+}				t_room_list;
+
 //Main.c
 
 //Parsing.c
 void	parsing(void);
-int		get_line_type(char *line);
+int		get_line_type(char *line, t_room_list **room_list);
 int		full_digit(char *line);
 int		check_int_range(char *nb);
 int		check_int_max(char *nb);
-int		is_room(char *line);
+int		is_room(char *line, t_room_list **room_list);
+void	add_room(char **room, t_room_list **room_list);
+int		is_pipe(char *line, t_room_list **room_list);
+int		check_name(char *name, t_room_list **room_list);
 
 //Utils.c
 void	error(void);
