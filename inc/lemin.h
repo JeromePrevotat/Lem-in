@@ -21,14 +21,12 @@
 # define FALSE 0
 # define ERROR -1
 
-enum
-{
-	COM, CMD, ROOM, PIPE, ANT
-};
-
 typedef struct	s_room
 {
 	char		*name;
+	int			start;
+	int			end;
+	t_room_list	*adj;
 	int			x;
 	int			y;
 }				t_room;

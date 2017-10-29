@@ -16,7 +16,7 @@ OBJ = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): libft $(OBJ) $(INC)
-	$(CC) $(CFLAGS) $(LIB) -g $(SRCS) -o $@
+	$(CC) $(CFLAGS) $(LIB) $(SRCS) -o $@
 
 .PHONY: clean
 clean:

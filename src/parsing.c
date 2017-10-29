@@ -20,7 +20,8 @@ void	parsing(void)
 	room_list = NULL;
 	while (get_next_line(0, &line) != 0)
 	{
-		get_line_type(line, &room_list);
+		if (get_line_type(line, &room_list) == ERROR)
+			error();
 		free(line);
 	}
 	free(line);
@@ -41,16 +42,16 @@ int		get_line_type(char *line, t_room_list **room_list)
 	if (ft_strcmp(line, "") == 0)
 		return (ERROR);
 	else if (line[0] == '#' && line[1] != '#')
-		return (COM);
+		return (TRUE);
 	else if (line[0] == '#' && line[1] == '#')
-		return (CMD);
+		return (TRUE);
 	else if (full_digit(line) == TRUE && check_int_range(line) == TRUE)
-		return (ANT);
+		return (TRUE);
 	else if (is_room(line, room_list) == TRUE)
-		return (ROOM);
+		return (TRUE);
 	else if (is_pipe(line, room_list) == TRUE)
-		return (PIPE);
-	return (-2);
+		return (TRUE);
+	return (ERROR);
 }
 
 int		full_digit(char *line)
