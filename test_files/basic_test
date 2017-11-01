@@ -1,0 +1,14 @@
+#Lem-In
+#Ants
+3
+#Rooms
+##start
+abc 0 0
+##end
+123 0 1
+def 1 1
+456 2 2
+#Pipes
+abc-def
+def-123
+def-456

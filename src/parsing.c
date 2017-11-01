@@ -12,29 +12,84 @@
 
 #include "../inc/lemin.h"
 
-void	parsing(void)
+void	parsing(t_anthill *anthill)
 {
-	char		*line;
 	t_room_list	*room_list;
+	char		*line;
+	int			type;
+	int			cmd;
 
 	room_list = NULL;
+	anthill->rooms = room_list;
+	cmd = 0;
 	while (get_next_line(0, &line) != 0)
 	{
-		if (get_line_type(line, &room_list) == ERROR)
+		if ((type = get_line_type(line, &anthill->rooms)) == ERROR)
+			error();
+		cmd = add_to_anthill(anthill, line, type);
+		if (cmd == ERROR)
 			error();
 		free(line);
 	}
 	free(line);
-	while (room_list->prev != NULL)
-		room_list = room_list->prev;
+	to_lst_start(&anthill->rooms);
 	printf("ROOMLIST :\n");
-	while (room_list->next != NULL)
+	while (anthill->rooms->next != NULL)
 	{
-		printf(">%s<\n", room_list->room->name);
-		room_list = room_list->next;
+		if (anthill->rooms->room->start == TRUE)
+			printf("START HERE !\n");
+		if (anthill->rooms->room->end == TRUE)
+			printf("END HERE !\n");
+		printf(">%s<\n", anthill->rooms->room->name);
+		anthill->rooms = anthill->rooms->next;
 	}
-	printf(">%s<\n\n", room_list->room->name);
-	free_room_list(room_list);
+	printf(">%s<\n\n", anthill->rooms->room->name);
+	free_room_list(anthill->rooms);
+}
+
+int		add_to_anthill(t_anthill *anthill, char *line, int type)
+{
+	static int	cmd_list[2] = {0};
+	int			c;
+
+	if (type == CMD)
+	{
+		c = get_cmd(line);
+		if (c == 1 && cmd_list[0] == 0)
+			cmd_list[0] = 1;
+		if (c == 2 && cmd_list[1] == 0)
+			cmd_list[1] = 1;
+		return (c);
+	}
+	if (type == ANT)
+		anthill->ants = ft_atoi(line);
+	if (type == ROOM)
+		build_room(anthill, line, cmd_list);
+	if (type == PIPE)
+		return (0);
+	return (0);
+}
+
+int		get_cmd(char *line)
+{
+	static int	start = 0;
+	static int	end = 0;
+
+	if (ft_strcmp(line + 2, "start") == 0)
+	{
+		if (start == 1)
+			return (ERROR);
+		start = 1;
+		return (1);
+	}
+	if (ft_strcmp(line + 2, "end") == 0)
+	{
+		if (end == 1)
+			return (ERROR);
+		end = 1;
+		return (2);
+	}
+	return (0);
 }
 
 int		get_line_type(char *line, t_room_list **room_list)
@@ -42,15 +97,15 @@ int		get_line_type(char *line, t_room_list **room_list)
 	if (ft_strcmp(line, "") == 0)
 		return (ERROR);
 	else if (line[0] == '#' && line[1] != '#')
-		return (TRUE);
+		return (COM);
 	else if (line[0] == '#' && line[1] == '#')
-		return (TRUE);
+		return (CMD);
 	else if (full_digit(line) == TRUE && check_int_range(line) == TRUE)
-		return (TRUE);
-	else if (is_room(line, room_list) == TRUE)
-		return (TRUE);
+		return (ANT);
+	else if (is_room(line) == TRUE)
+		return (ROOM);
 	else if (is_pipe(line, room_list) == TRUE)
-		return (TRUE);
+		return (PIPE);
 	return (ERROR);
 }
 
@@ -68,113 +123,19 @@ int		full_digit(char *line)
 	return (TRUE);
 }
 
-int		check_int_range(char *nb)
-{
-	if (ft_strlen(nb) < 10)
-		return (TRUE);
-	if (ft_strlen(nb) > 10)
-		return (FALSE);
-	if (ft_strlen(nb) == 10)
-		return (check_int_max(nb));
-	return (FALSE);
-}
-
-int		check_int_max(char *nb)
-{
-	int		part1;
-	int		part2;
-	char	c;
-
-	c = nb[0];
-	part1 = ft_atoi(&c);
-	part2 = ft_atoi(nb + 1);
-	if (part2 <= 147483647 && part1 <= 2)
-		return (TRUE);
-	else if (part2 <= 147483647 && part1 > 2)
-		return (FALSE);
-	else if (part2 > 147483647 && part1 < 2)
-		return (TRUE);
-	else if (part2 > 147483647 && part1 >= 2)
-		return (FALSE);
-	return (ERROR);
-}
-
-int		is_room(char *line, t_room_list **room_list)
-{
-	char **room;
-	int		i;
-
-	i = 0;
-	room = ft_strsplit(line, ' ');
-	while (room[i] != NULL)
-		i++;
-	if (i != 3)
-		return (FALSE);
-	if (room[0][0] == '#' || room[0][0] == 'L')
-		return (FALSE);
-	if (full_digit(room[1]) == FALSE || check_int_range(room[1]) == FALSE)
-		return (FALSE);
-	if (full_digit(room[2]) == FALSE || check_int_range(room[2]) == FALSE)
-		return (FALSE);
-	add_room(room, room_list);
-	free(room);
-	return (TRUE);
-}
-
-void	add_room(char **str_room, t_room_list **room_list)
-{
-	t_room		*room;
-	t_room_list	*new_room;
-
-	if (!(room = (t_room *)malloc(1 * sizeof(t_room))))
-		return ;
-	if (!(new_room = (t_room_list *)malloc(1 * sizeof(t_room_list))))
-		return ;
-	room->name = str_room[0];
-	room->x = ft_atoi(str_room[1]);
-	room->y = ft_atoi(str_room[2]);
-	new_room->room = room;
-	new_room->next = NULL;
-	new_room->prev = NULL;
-	if ((*room_list) == NULL)
-		(*room_list) = new_room;
-	else
-	{
-		while ((*room_list)->next != NULL)
-			(*room_list) = (*room_list)->next;
-		(*room_list)->next = new_room;
-		new_room->prev = (*room_list);
-	}
-}
-
 int		is_pipe(char *line, t_room_list **room_list)
 {
 	char	**pipe;
 	int		i;
 
-	(void)room_list;
 	i = 0;
 	pipe = ft_strsplit(line, '-');
 	while (pipe[i] != NULL)
 		i++;
 	if (i != 2)
 		return (FALSE);
-	if (check_name(pipe[0], room_list) == FALSE || check_name(pipe[1], room_list) == FALSE)
+	if (check_name(pipe[0], room_list) == FALSE
+		|| check_name(pipe[1], room_list) == FALSE)
 		return (FALSE);
 	return (TRUE);
-}
-
-int		check_name(char *name, t_room_list **room_list)
-{
-	while ((*room_list)->prev != NULL)
-		(*room_list) = (*room_list)->prev;
-	while ((*room_list)->next != NULL)
-	{
-		if (ft_strcmp(name, (*room_list)->room->name) == 0)
-			return (TRUE);
-		(*room_list) = (*room_list)->next;
-	}
-	if (ft_strcmp(name, (*room_list)->room->name) == 0)
-		return (TRUE);
-	return (FALSE);
 }

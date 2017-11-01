@@ -14,6 +14,11 @@
 
 int	main(void)
 {
-	parsing();
+	t_anthill	*anthill;
+
+	if (!(anthill = (t_anthill *)malloc(1 * sizeof(anthill))))
+		return (ERROR);
+	parsing(anthill);
+	free(anthill);
 	return (0);
 }

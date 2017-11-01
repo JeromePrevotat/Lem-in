@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_ressources.c                                  :+:      :+:    :+:   */
+/*   int_range.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jprevota <jprevota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,33 +12,33 @@
 
 #include "../inc/lemin.h"
 
-void	free_room_list(t_room_list *room_list)
+int		check_int_range(char *nb)
 {
-	while (room_list->prev != NULL)
-		room_list = room_list->prev;
-	while (room_list->next != NULL)
-	{
-		if (room_list->room != NULL)
-			free(room_list->room);
-		room_list = room_list->next;
-		if (room_list->prev != NULL)
-			free(room_list->prev);
-	}
-	if (room_list->room != NULL)
-		free(room_list->room);
-	if (room_list != NULL)
-		free(room_list);
+	if (ft_strlen(nb) < 10)
+		return (TRUE);
+	if (ft_strlen(nb) > 10)
+		return (FALSE);
+	if (ft_strlen(nb) == 10)
+		return (check_int_max(nb));
+	return (FALSE);
 }
 
-void	free_anthill(t_anthill **anthill)
+int		check_int_max(char *nb)
 {
-	if (*anthill != NULL)
-	{
-		if ((*anthill)->start != NULL)
-			free((*anthill)->start);
-		if ((*anthill)->end != NULL)
-			free((*anthill)->end);
-		if ((*anthill)->rooms != NULL)
-			free_room_list((*anthill)->rooms);
-	}
+	int		part1;
+	int		part2;
+	char	c;
+
+	c = nb[0];
+	part1 = ft_atoi(&c);
+	part2 = ft_atoi(nb + 1);
+	if (part2 <= 147483647 && part1 <= 2)
+		return (TRUE);
+	else if (part2 <= 147483647 && part1 > 2)
+		return (FALSE);
+	else if (part2 > 147483647 && part1 < 2)
+		return (TRUE);
+	else if (part2 > 147483647 && part1 >= 2)
+		return (FALSE);
+	return (ERROR);
 }
