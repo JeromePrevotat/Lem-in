@@ -33,17 +33,6 @@ void	parsing(t_anthill *anthill)
 	}
 	free(line);
 	to_lst_start(&anthill->rooms);
-	printf("ROOMLIST :\n");
-	while (anthill->rooms->next != NULL)
-	{
-		if (anthill->rooms->room->start == TRUE)
-			printf("START HERE !\n");
-		if (anthill->rooms->room->end == TRUE)
-			printf("END HERE !\n");
-		printf(">%s<\n", anthill->rooms->room->name);
-		anthill->rooms = anthill->rooms->next;
-	}
-	printf(">%s<\n\n", anthill->rooms->room->name);
 	free_room_list(anthill->rooms);
 }
 
@@ -52,6 +41,7 @@ int		add_to_anthill(t_anthill *anthill, char *line, int type)
 	static int	cmd_list[2] = {0};
 	int			c;
 
+	ft_putendl(line);
 	if (type == CMD)
 	{
 		c = get_cmd(line);
@@ -66,7 +56,7 @@ int		add_to_anthill(t_anthill *anthill, char *line, int type)
 	if (type == ROOM)
 		build_room(anthill, line, cmd_list);
 	if (type == PIPE)
-		return (0);
+		build_pipe(anthill, line);
 	return (0);
 }
 
@@ -120,22 +110,5 @@ int		full_digit(char *line)
 			return (FALSE);
 		i++;
 	}
-	return (TRUE);
-}
-
-int		is_pipe(char *line, t_room_list **room_list)
-{
-	char	**pipe;
-	int		i;
-
-	i = 0;
-	pipe = ft_strsplit(line, '-');
-	while (pipe[i] != NULL)
-		i++;
-	if (i != 2)
-		return (FALSE);
-	if (check_name(pipe[0], room_list) == FALSE
-		|| check_name(pipe[1], room_list) == FALSE)
-		return (FALSE);
 	return (TRUE);
 }

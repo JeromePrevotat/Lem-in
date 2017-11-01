@@ -61,7 +61,6 @@ typedef struct			s_room_list
 void	parsing(t_anthill *anthill);
 int		get_line_type(char *line, t_room_list **room_list);
 int		full_digit(char *line);
-int		is_pipe(char *line, t_room_list **room_list);
 int		add_to_anthill(t_anthill *anthill, char *line, int type);
 int		get_cmd(char *line);
 
@@ -69,6 +68,12 @@ int		get_cmd(char *line);
 ** Room.c
 */
 int		build_room(t_anthill *anthill, char *line, int *cmd);
+
+/*
+** Pipe.c
+*/
+int		is_pipe(char *line, t_room_list **room_list);
+void	build_pipe(t_anthill *anthill, char *line);
 
 /*
 ** Int_range.c
