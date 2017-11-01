@@ -74,6 +74,8 @@ int		build_room(t_anthill *anthill, char *line, int *cmd);
 */
 int		is_pipe(char *line, t_room_list **room_list);
 void	build_pipe(t_anthill *anthill, char *line);
+void	add_pipe_to(t_anthill *anthill, char *dest);
+t_room	*room_cpy(t_room *src);
 
 /*
 ** Int_range.c

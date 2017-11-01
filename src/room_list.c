@@ -32,6 +32,7 @@ void	add_room(t_anthill *anthill, char **str_room, int *cmd)
 	room->y = ft_atoi(str_room[2]);
 	room->start = FALSE;
 	room->end = FALSE;
+	room->adj = NULL;
 	if (cmd[0] == 1)
 	{
 		room->start = TRUE;

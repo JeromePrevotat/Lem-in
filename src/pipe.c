@@ -44,17 +44,58 @@ void	build_pipe(t_anthill *anthill, char *line)
 
 	i = 0;
 	pipe = ft_strsplit(line, '-');
-	to_lst_start(anthill->rooms);
+	to_lst_start(&anthill->rooms);
 	while (anthill->rooms->next != NULL)
 	{
-		if (anthill->rooms->room->name == pipe[0])
-		{
-			
-		}
-		if (anthill->rooms->room->name == pipe[1])
-		{
-
-		}
+		if (ft_strcmp(anthill->rooms->room->name, pipe[0]) == 0)
+			add_pipe_to(anthill, pipe[1]);
+		if (ft_strcmp(anthill->rooms->room->name, pipe[1]) == 0)
+			add_pipe_to(anthill, pipe[0]);
 		anthill->rooms = anthill->rooms->next;
 	}
+	free(pipe[0]);
+	free(pipe[1]);
+	free(pipe);
+}
+
+void	add_pipe_to(t_anthill *anthill, char *dest)
+{
+	t_room_list	*new_room;
+	t_room_list	*tmp;
+
+	new_room = NULL;
+	tmp = anthill->rooms;
+	to_lst_start(&tmp);
+	while (tmp->next != NULL && ft_strcmp(tmp->room->name, dest) != 0)
+		tmp = tmp->next;
+	if (!(new_room = (t_room_list *)malloc(1 * sizeof(t_room_list))))
+		return ;
+	new_room->room = room_cpy(tmp->room);
+	if (anthill->rooms->room->adj == NULL)
+	{
+		new_room->prev = NULL;
+		new_room->next = NULL;
+		anthill->rooms->room->adj = new_room;
+	}
+	else
+	{
+		new_room->prev = anthill->rooms->room->adj;
+		new_room->next = NULL;
+		anthill->rooms->room->adj->next = new_room;
+	}
+}
+
+t_room	*room_cpy(t_room *src)
+{
+	t_room	*cpy;
+
+	if ((!src) || (!(cpy = (t_room *)malloc(1 * sizeof(t_room)))))
+		return (NULL);
+	cpy->name = ft_strdup(src->name);
+	cpy->start = src->start;
+	cpy->end = src->end;
+	cpy->adj = src->adj;
+	cpy->x = src->x;
+	cpy->y = src->y;
+	return (cpy);
 }
