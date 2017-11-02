@@ -81,6 +81,12 @@ int	send_scout(t_anthill *anthill);
 int	scout_adj(t_anthill *anthill, t_adj_list *adj, int dv);
 
 /*
+** Solve.c
+*/
+void	ants_attack(t_anthill *anthill);
+int		check_end(char **ants_tab);
+
+/*
 ** Room.c
 */
 int		build_room(t_anthill *anthill, char *line, int *cmd);

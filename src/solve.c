@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   solve.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jprevota <jprevota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,17 +12,39 @@
 
 #include "../inc/lemin.h"
 
-int	main(void)
+void	ants_attack(t_anthill *anthill)
 {
-	t_anthill	*anthill;
+	char	**ants_tab;
+	int		i;
 
-	if (!(anthill = (t_anthill *)malloc(1 * sizeof(t_anthill))))
-		return (ERROR);
-	anthill->start = NULL;
-	anthill->end = NULL;
-	parsing(anthill);
-	send_scout(anthill);
-	ants_attack(anthill);
-	free_anthill(&anthill);
-	return (0);
+	if (!(ants_tab = (char **)malloc(anthill->ants * sizeof(char *))))
+		return ;
+	i = 0;
+	while (i < anthill->ants)
+	{
+		ants_tab[i] = ft_strdup(anthill->start);
+		i++;
+	}
+	while (check_end(ants_tab) == FALSE)
+		move_ants(anthill, ants_tab);
+
+}
+
+void move_ants(t)anthill *anthill, char **ants_tab)
+{
+	/* code */
+}
+
+int		check_end(char **ants_tab)
+{
+	int	i;
+
+	i = 0;
+	while (i < anthill->ants)
+	{
+		if (ft_strcmp(ants_tab[i], anthill->end) != 0)
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
 }
