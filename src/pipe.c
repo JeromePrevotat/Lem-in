@@ -43,6 +43,10 @@ void	build_pipe(t_anthill *anthill, char *line)
 			add_pipe_to(anthill, pipe[0]);
 		anthill->rooms = anthill->rooms->next;
 	}
+	if (ft_strcmp(anthill->rooms->room->name, pipe[0]) == 0)
+		add_pipe_to(anthill, pipe[1]);
+	if (ft_strcmp(anthill->rooms->room->name, pipe[1]) == 0)
+		add_pipe_to(anthill, pipe[0]);
 	free_split(pipe, 0);
 }
 

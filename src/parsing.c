@@ -32,6 +32,28 @@ void	parsing(t_anthill *anthill)
 		free(line);
 	}
 	free(line);
+	printf("\n");
+	to_lst_start(&anthill->rooms);
+	while (anthill->rooms->next != NULL)
+	{
+		while (anthill->rooms->room->adj->prev != NULL)
+			anthill->rooms->room->adj = anthill->rooms->room->adj->prev;
+		while (anthill->rooms->room->adj->next != NULL)
+		{
+			printf("%s -> %s\n", anthill->rooms->room->name, anthill->rooms->room->adj->room);
+			anthill->rooms->room->adj = anthill->rooms->room->adj->next;
+		}
+		printf("%s -> %s\n", anthill->rooms->room->name, anthill->rooms->room->adj->room);
+		anthill->rooms = anthill->rooms->next;
+	}
+	while (anthill->rooms->room->adj->prev != NULL)
+		anthill->rooms->room->adj = anthill->rooms->room->adj->prev;
+	while (anthill->rooms->room->adj->next != NULL)
+	{
+		printf("%s -> %s\n", anthill->rooms->room->name, anthill->rooms->room->adj->room);
+		anthill->rooms->room->adj = anthill->rooms->room->adj->next;
+	}
+	printf("%s -> %s\n", anthill->rooms->room->name, anthill->rooms->room->adj->room);
 	free_anthill(&anthill);
 }
 
