@@ -49,6 +49,8 @@ typedef struct			s_room
 	t_adj_list			*adj;
 	int					x;
 	int					y;
+	int					dv;
+	int					full;
 }						t_room;
 
 typedef struct			s_room_list
@@ -70,6 +72,13 @@ int		get_line_type(char *line, t_room_list **room_list);
 int		full_digit(char *line);
 int		add_to_anthill(t_anthill *anthill, char *line, int type);
 int		get_cmd(char *line);
+
+
+/*
+** Scout.c
+*/
+int	send_scout(t_anthill *anthill);
+int	scout_adj(t_anthill *anthill, t_adj_list *adj, int dv);
 
 /*
 ** Room.c

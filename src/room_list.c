@@ -33,6 +33,8 @@ void	add_room(t_anthill *anthill, char **str_room, int *cmd)
 	room->start = FALSE;
 	room->end = FALSE;
 	room->adj = NULL;
+	room->dv = -1;
+	room->full = FALSE;
 	if (cmd[0] == 1)
 	{
 		room->start = TRUE;
