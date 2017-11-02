@@ -36,18 +36,14 @@ int		is_room(char *line)
 	while (room[i] != NULL)
 		i++;
 	if (i != 3)
-		return (FALSE);
+		return (free_split(room, 0));
 	if (room[0][0] == '#' || room[0][0] == 'L')
-		return (FALSE);
+		return (free_split(room, 0));
 	if (full_digit(room[1]) == FALSE || check_int_range(room[1]) == FALSE)
-		return (FALSE);
+		return (free_split(room, 0));
 	if (full_digit(room[2]) == FALSE || check_int_range(room[2]) == FALSE)
-		return (FALSE);
-	free(room[0]);
-	free(room[1]);
-	free(room[2]);
-	free(room);
-	return (TRUE);
+		return (free_split(room, 0));
+	return (free_split(room, 1));
 }
 
 int		build_room(t_anthill *anthill, char *line, int *cmd)
@@ -60,11 +56,7 @@ int		build_room(t_anthill *anthill, char *line, int *cmd)
 	while (room[i] != NULL)
 		i++;
 	if (i != 3)
-		return (FALSE);
+		return (free_split(room, 0));
 	add_room(anthill, room, cmd);
-	free(room[0]);
-	free(room[1]);
-	free(room[2]);
-	free(room);
-	return (TRUE);
+	return (free_split(room, 1));
 }

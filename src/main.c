@@ -16,9 +16,10 @@ int	main(void)
 {
 	t_anthill	*anthill;
 
-	if (!(anthill = (t_anthill *)malloc(1 * sizeof(anthill))))
+	if (!(anthill = (t_anthill *)malloc(1 * sizeof(t_anthill))))
 		return (ERROR);
+	anthill->start = NULL;
+	anthill->end = NULL;
 	parsing(anthill);
-	free(anthill);
 	return (0);
 }

@@ -25,24 +25,14 @@ int		is_pipe(char *line, t_room_list **room_list)
 		return (FALSE);
 	if (check_name(pipe[0], room_list) == FALSE
 		|| check_name(pipe[1], room_list) == FALSE)
-	{
-		free(pipe[0]);
-		free(pipe[1]);
-		free(pipe);
-		return (FALSE);
-	}
-	free(pipe[0]);
-	free(pipe[1]);
-	free(pipe);
-	return (TRUE);
+		return (free_split(pipe, 0));
+	return (free_split(pipe, 1));
 }
 
 void	build_pipe(t_anthill *anthill, char *line)
 {
 	char	**pipe;
-	int		i;
 
-	i = 0;
 	pipe = ft_strsplit(line, '-');
 	to_lst_start(&anthill->rooms);
 	while (anthill->rooms->next != NULL)
@@ -53,49 +43,28 @@ void	build_pipe(t_anthill *anthill, char *line)
 			add_pipe_to(anthill, pipe[0]);
 		anthill->rooms = anthill->rooms->next;
 	}
-	free(pipe[0]);
-	free(pipe[1]);
-	free(pipe);
+	free_split(pipe, 0);
 }
 
 void	add_pipe_to(t_anthill *anthill, char *dest)
 {
-	t_room_list	*new_room;
-	t_room_list	*tmp;
+	t_adj_list	*adj_room;
 
-	new_room = NULL;
-	tmp = anthill->rooms;
-	to_lst_start(&tmp);
-	while (tmp->next != NULL && ft_strcmp(tmp->room->name, dest) != 0)
-		tmp = tmp->next;
-	if (!(new_room = (t_room_list *)malloc(1 * sizeof(t_room_list))))
+	adj_room = NULL;
+	if (!(adj_room = (t_adj_list *)malloc(1 * sizeof(t_adj_list))))
 		return ;
-	new_room->room = room_cpy(tmp->room);
+	adj_room->room = ft_strdup(dest);
+	adj_room->next = NULL;
 	if (anthill->rooms->room->adj == NULL)
 	{
-		new_room->prev = NULL;
-		new_room->next = NULL;
-		anthill->rooms->room->adj = new_room;
+		adj_room->prev = NULL;
+		anthill->rooms->room->adj = adj_room;
 	}
 	else
 	{
-		new_room->prev = anthill->rooms->room->adj;
-		new_room->next = NULL;
-		anthill->rooms->room->adj->next = new_room;
+		while (anthill->rooms->room->adj->next != NULL)
+			anthill->rooms->room->adj = anthill->rooms->room->adj->next;
+		anthill->rooms->room->adj->next = adj_room;
+		adj_room->prev = anthill->rooms->room->adj;
 	}
-}
-
-t_room	*room_cpy(t_room *src)
-{
-	t_room	*cpy;
-
-	if ((!src) || (!(cpy = (t_room *)malloc(1 * sizeof(t_room)))))
-		return (NULL);
-	cpy->name = ft_strdup(src->name);
-	cpy->start = src->start;
-	cpy->end = src->end;
-	cpy->adj = src->adj;
-	cpy->x = src->x;
-	cpy->y = src->y;
-	return (cpy);
 }

@@ -34,12 +34,19 @@ typedef struct			s_anthill
 	char				*end;
 }						t_anthill;
 
+typedef struct			s_adj_list
+{
+	struct s_adj_list	*prev;
+	struct s_adj_list	*next;
+	char				*room;
+}						t_adj_list;
+
 typedef struct			s_room
 {
 	char				*name;
 	int					start;
 	int					end;
-	struct s_room_list	*adj;
+	t_adj_list			*adj;
 	int					x;
 	int					y;
 }						t_room;
@@ -75,7 +82,6 @@ int		build_room(t_anthill *anthill, char *line, int *cmd);
 int		is_pipe(char *line, t_room_list **room_list);
 void	build_pipe(t_anthill *anthill, char *line);
 void	add_pipe_to(t_anthill *anthill, char *dest);
-t_room	*room_cpy(t_room *src);
 
 /*
 ** Int_range.c
@@ -99,6 +105,10 @@ void	error(void);
 /*
 ** Free_ressources.c
 */
+void	free_room(t_room **room);
 void	free_room_list(t_room_list *room_list);
+void	free_adj_list(t_adj_list **adj_list);
+void	free_anthill(t_anthill **anthill);
+int		free_split(char **split, int rv);
 
 #endif

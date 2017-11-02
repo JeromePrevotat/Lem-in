@@ -32,20 +32,7 @@ void	parsing(t_anthill *anthill)
 		free(line);
 	}
 	free(line);
-	printf("PIPES LIST :\n");
-	to_lst_start(&anthill->rooms);
-	while (anthill->rooms->next != NULL)
-	{
-		to_lst_start(&anthill->rooms->room->adj);
-		while (anthill->rooms->room->adj->next != NULL)
-		{
-			printf(">%s< -> >%s<\n", anthill->rooms->room->name, anthill->rooms->room->adj->room->name);
-			anthill->rooms->room->adj = anthill->rooms->room->adj->next;
-		}
-		printf(">%s< -> >%s<\n", anthill->rooms->room->name, anthill->rooms->room->adj->room->name);
-		anthill->rooms = anthill->rooms->next;
-	}
-	free_room_list(anthill->rooms);
+	free_anthill(&anthill);
 }
 
 int		add_to_anthill(t_anthill *anthill, char *line, int type)
