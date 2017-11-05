@@ -1,0 +1,54 @@
+#ANTS
+3
+#ROOMS
+#J
+##start
+start 0 0
+a 1 0
+b 2 0
+c 1 1
+d 2 1
+e 2 0
+#E
+f 3 0
+g 4 0
+h 5 0
+i 3 1
+j 4 1
+k 3 2
+l 4 2
+m 5 2
+#J
+n 6 0
+o 7 0
+##end
+end 8 0
+q 7 1
+r 7 2
+s 6 2
+#PIPES
+start-a
+a-b
+a-c
+c-d
+d-e
+c-i
+i-j
+i-k
+k-l
+l-m
+i-f
+f-g
+g-h
+j-h
+h-n
+n-o
+o-end
+o-q
+q-r
+r-s
+# start -- a -- b  f -- g -- h -- n -- o -- end
+#          |       |         |         |
+#          c ----- i -- j  --|         q
+#          |       |                   |
+#   e ---- d       k -- l-- m     s -- r

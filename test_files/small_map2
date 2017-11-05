@@ -1,0 +1,13 @@
+#ANTS
+3
+#ROOMS
+##start
+start 0 0
+##end
+end 0 1
+a 1 0
+b 1 1
+#PIPES
+start-a
+a-b
+b-end

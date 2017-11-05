@@ -84,7 +84,9 @@ int	scout_adj(t_anthill *anthill, t_adj_list *adj, int dv);
 ** Solve.c
 */
 void	ants_attack(t_anthill *anthill);
-int		check_end(char **ants_tab);
+void	move_ants(t_anthill *anthill, char **ants_tab);
+int		check_end(t_anthill *anthill, char **ants_tab);
+char	*get_next_room(t_anthill *anthill, char *cur_room);
 
 /*
 ** Room.c
@@ -116,6 +118,8 @@ int		is_room(char *line);
 ** Utils.c
 */
 void	error(void);
+t_room_list	*get_room_prop(t_anthill *anthill, char *name);
+void print_pos(t_anthill *anthill, char **ants_tab);
 
 /*
 ** Free_ressources.c
