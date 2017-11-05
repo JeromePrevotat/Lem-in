@@ -11,6 +11,7 @@ SRCS += ./src/room_list.c
 SRCS += ./src/pipe.c
 SRCS += ./src/scout.c
 SRCS += ./src/solve.c
+SRCS += ./src/check_error.c
 SRCS += ./src/int_range.c
 SRCS += ./src/utils.c
 SRCS += ./src/free_ressources.c

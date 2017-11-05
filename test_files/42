@@ -1,0 +1,38 @@
+#ANTS
+42
+#ROOMS
+##start
+start 0 0
+a 0 1
+b 1 1
+c 2 1
+d 0 2
+e 2 2
+f 4 1
+g 5 0
+h 6 0
+i 7 0
+j 6 1
+k 5 2
+l 6 2
+##end
+end 7 2
+#PIPES
+start-a
+a-b
+b-c
+c-d
+c-e
+c-f
+f-g
+g-h
+h-i
+i-j
+j-k
+k-l
+l-end
+# start        d    __ g -- h -- i
+#  |           |    |            |
+#  a ---- b -- c -- f  | -- j ---|
+#              |       |
+#              e       k -- l -- end

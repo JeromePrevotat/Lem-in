@@ -115,6 +115,13 @@ int		check_name(char *name, t_room_list **room_list);
 int		is_room(char *line);
 
 /*
+** Check_error.c
+*/
+int	check_error(t_anthill *anthill);
+int	check_no_path(t_anthill *anthill);
+int	no_pipes(t_anthill *anthill);
+
+/*
 ** Utils.c
 */
 void	error(void);

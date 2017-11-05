@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jprevota <jprevota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,19 +12,45 @@
 
 #include "../inc/lemin.h"
 
-int	main(void)
+int	check_error(t_anthill *anthill)
 {
-	t_anthill	*anthill;
+	if (anthill->ants < 1)
+		error();
+	if (anthill->rooms == NULL)
+		error();
+	if (anthill->start == NULL)
+		error();
+	if (anthill->end == NULL)
+		error();
+	if (no_pipes(anthill) == TRUE)
+		error();
+	return (1);
+}
 
-	if (!(anthill = (t_anthill *)malloc(1 * sizeof(t_anthill))))
-		return (ERROR);
-	anthill->start = NULL;
-	anthill->end = NULL;
-	parsing(anthill);
-	check_error(anthill);
-	send_scout(anthill);
-	check_no_path(anthill);
-	ants_attack(anthill);
-	free_anthill(&anthill);
-	return (0);
+int	no_pipes(t_anthill *anthill)
+{
+	t_room_list	*r_tmp;
+
+	to_lst_start(&anthill->rooms);
+	r_tmp = anthill->rooms;
+	while (r_tmp != NULL)
+	{
+		if (r_tmp->room->adj != NULL)
+			return (FALSE);
+		r_tmp = r_tmp->next;
+	}
+	return (TRUE);
+}
+
+int	check_no_path(t_anthill *anthill)
+{
+	t_room_list	*tmp;
+
+	to_lst_start(&anthill->rooms);
+	tmp = anthill->rooms;
+	while (tmp != NULL && ft_strcmp(tmp->room->name, anthill->start) != 0)
+		tmp = tmp->next;
+	if (tmp->room->dv == -1)
+		error();
+	return (1);
 }

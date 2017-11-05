@@ -23,7 +23,7 @@ int	send_scout(t_anthill *anthill)
 	if (tmp == NULL)
 		return (ERROR);
 	tmp->room->dv = 0;
-	scout_adj(anthill, tmp->room->adj, tmp->room->dv + 1);
+		scout_adj(anthill, tmp->room->adj, tmp->room->dv + 1);
 	return (0);
 }
 
@@ -32,6 +32,8 @@ int	scout_adj(t_anthill *anthill, t_adj_list *adj, int dv)
 	t_room_list	*r_tmp;
 	t_adj_list	*adj_tmp;
 
+	if (!adj)
+		return (0);
 	to_lst_start(&anthill->rooms);
 	while (adj->prev != NULL)
 		adj = adj->prev;
