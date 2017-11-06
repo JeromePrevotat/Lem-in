@@ -93,11 +93,14 @@ int		free_split(char **split, int rv)
 	int	i;
 
 	i = 0;
-	while (split[i] != NULL)
+	if (split != NULL)
 	{
-		free(split[i]);
-		i++;
+		while (split[i] != NULL)
+		{
+			free(split[i]);
+			i++;
+		}
+		free(split);
 	}
-	free(split);
 	return (rv);
 }

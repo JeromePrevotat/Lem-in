@@ -8,6 +8,7 @@ SRCS += ./src/main.c
 SRCS += ./src/parsing.c
 SRCS += ./src/room.c
 SRCS += ./src/room_list.c
+SRCS += ./src/file.c
 SRCS += ./src/pipe.c
 SRCS += ./src/scout.c
 SRCS += ./src/solve.c
@@ -23,7 +24,7 @@ OBJ = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): libft $(OBJ) $(INC)
-	$(CC) -g $(CFLAGS) $(LIB) $(SRCS) -o $@
+	$(CC) -g3 $(CFLAGS) $(LIB) $(SRCS) -o $@
 
 .PHONY: clean
 clean:

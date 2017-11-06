@@ -15,15 +15,30 @@
 int	check_error(t_anthill *anthill)
 {
 	if (anthill->ants < 1)
+	{
+		printf("ANTS ");
 		error();
+	}
 	if (anthill->rooms == NULL)
+	{
+		printf("ROOMS ");
 		error();
+	}
 	if (anthill->start == NULL)
+	{
+		printf("NO START ");
 		error();
+	}
 	if (anthill->end == NULL)
+	{
+		printf("NO END ");
 		error();
+	}
 	if (no_pipes(anthill) == TRUE)
+	{
+		printf("NO PIPES ");
 		error();
+	}
 	return (1);
 }
 
@@ -51,6 +66,9 @@ int	check_no_path(t_anthill *anthill)
 	while (tmp != NULL && ft_strcmp(tmp->room->name, anthill->start) != 0)
 		tmp = tmp->next;
 	if (tmp->room->dv == -1)
+	{
+		printf("DV START -1 ");
 		error();
+	}
 	return (1);
 }

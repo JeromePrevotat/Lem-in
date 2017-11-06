@@ -31,7 +31,13 @@ void	ants_attack(t_anthill *anthill)
 		move_ants(anthill, ants_tab);
 		print_pos(anthill, ants_tab);
 	}
-
+	i = 0;
+	while (i < anthill->ants)
+	{
+		free(ants_tab[i]);
+		i++;
+	}
+	free(ants_tab);
 }
 
 void move_ants(t_anthill *anthill, char **ants_tab)
@@ -87,7 +93,7 @@ char	*get_next_room(t_anthill *anthill, char *cur_room)
 	while (tmp2 != NULL)
 	{
 		if ((tmp = get_room_prop(anthill, tmp2->room)) != NULL
-			&& tmp->room->dv < range && tmp->room->full == FALSE)
+			&& tmp->room->dv <= range && tmp->room->full == FALSE)
 		{
 			range = tmp->room->dv;
 			if (next != NULL)

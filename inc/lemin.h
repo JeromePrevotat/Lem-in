@@ -60,9 +60,20 @@ typedef struct			s_room_list
 	t_room				*room;
 }						t_room_list;
 
+typedef struct			s_file
+{
+	struct s_file		*prev;
+	struct s_file		*next;
+	int					size;
+	char				*name;
+}						t_file;
+
 /*
 ** Main.c
 */
+void print_adj(t_anthill *anthill);
+void print_dv(t_anthill *anthill, char *room);
+
 
 /*
 ** Parsing.c
@@ -78,7 +89,12 @@ int		get_cmd(char *line);
 ** Scout.c
 */
 int	send_scout(t_anthill *anthill);
-int	scout_adj(t_anthill *anthill, t_adj_list *adj, int dv);
+int	scout_adj(t_anthill *anthill, t_file **file, int size, int dv);
+void	modif_dv(t_anthill *anthill, t_file **file, int dv);
+void	update_file(t_anthill *anthill, t_file **file, int size);
+int		check_dv(t_anthill *anthill, char *room);
+void	rm_modified(t_file **file, int size);
+void	add_adj_file(t_anthill *anthill, t_file **file, int size);
 
 /*
 ** Solve.c
@@ -113,6 +129,16 @@ void	to_lst_start(t_room_list **room_list);
 void	add_room(t_anthill *anthill, char **room, int *cmd);
 int		check_name(char *name, t_room_list **room_list);
 int		is_room(char *line);
+
+/*
+** File.c
+*/
+t_file	*new_file(char *name);
+void	add_to_file(t_file **file, char *name);
+void	file_rm_first(t_file **file);
+char	*file_get_next(t_file **file);
+void	print_file(t_file **file);
+int		file_size(t_file **file);
 
 /*
 ** Check_error.c
