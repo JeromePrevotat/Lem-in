@@ -23,7 +23,7 @@ void	ants_attack(t_anthill *anthill)
 	while (i < anthill->ants)
 	{
 		ants_tab[i] = ft_strdup(anthill->start);
-		print_pos(ants_tab, i);
+		//print_pos(ants_tab, i);
 		i++;
 	}
 	printf("\n");
