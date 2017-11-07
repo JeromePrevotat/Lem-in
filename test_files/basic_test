@@ -1,14 +1,19 @@
-#Lem-In
-#Ants
+#ANTS
 3
-#Rooms
+#ROOMS
 ##start
 abc 0 0
 ##end
 123 0 1
 def 1 1
 456 2 2
-#Pipes
+#PIPES
 abc-def
 def-123
 def-456
+#
+# abc ----|
+#  |      |
+# 123 -- def ---|
+#               |
+#              456

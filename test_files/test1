@@ -7,3 +7,5 @@ a 0 0
 b 1 0
 #pipes
 a-b
+#
+# a -- b

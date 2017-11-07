@@ -66,13 +66,16 @@ void	add_adj_file(t_anthill *anthill, t_file **file, int size)
 		if (r_tmp == NULL)
 			return ;
 		a_tmp = r_tmp->room->adj;
-		while (a_tmp->prev != NULL)
-			a_tmp = a_tmp->prev;
-		while (a_tmp != NULL)
+		if (a_tmp != NULL)
 		{
-			if (check_dv(anthill, a_tmp->room) == TRUE)
+			while (a_tmp->prev != NULL)
+			a_tmp = a_tmp->prev;
+			while (a_tmp != NULL)
+			{
+				if (check_dv(anthill, a_tmp->room) == TRUE)
 				add_to_file(file, a_tmp->room);
-			a_tmp = a_tmp->next;
+				a_tmp = a_tmp->next;
+			}
 		}
 		file_rm_first(file);
 		size--;

@@ -1,12 +1,20 @@
+#ANTS
 1
+#ROOMS
 ##start
 start 0 0
 a 0 1
 b 1 1
 c 1 0
 ##end
-end
+end 0 2
+#PIPES
 start-a
 a-b
 b-c
 c-start
+#
+# start -- c  end
+#   |      |
+#   a ---- b
+#

@@ -37,18 +37,20 @@ void print_adj(t_anthill *anthill)
 
 	to_lst_start(&anthill->rooms);
 	rtmp = anthill->rooms;
-
 	while (rtmp != NULL)
 	{
-		while (rtmp->room->adj->prev != NULL)
-			rtmp->room->adj = rtmp->room->adj->prev;
-		adjtmp = rtmp->room->adj;
-		printf("FROM >%s< TO :\n", rtmp->room->name);
-		while (adjtmp != NULL)
+		if (rtmp->room->adj != NULL)
 		{
-			printf("\t>%s< || ", adjtmp->room);
-			print_dv(anthill, adjtmp->room);
-			adjtmp = adjtmp->next;
+			while (rtmp->room->adj->prev != NULL)
+			rtmp->room->adj = rtmp->room->adj->prev;
+			adjtmp = rtmp->room->adj;
+			printf("FROM >%s< TO :\n", rtmp->room->name);
+			while (adjtmp != NULL)
+			{
+				printf("\t>%s< || ", adjtmp->room);
+				print_dv(anthill, adjtmp->room);
+				adjtmp = adjtmp->next;
+			}
 		}
 		rtmp = rtmp->next;
 	}
