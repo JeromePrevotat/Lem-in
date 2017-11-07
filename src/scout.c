@@ -108,15 +108,15 @@ int		check_dv(t_anthill *anthill, char *room)
 
 void	update_file(t_anthill *anthill, t_file **file, int size)
 {
-	printf("FILE UPDATE\n");
-	print_file(file);
+	//printf("FILE UPDATE\n");
+	//print_file(file);
 	add_adj_file(anthill, file, size);
-	printf("ADJ ADDED\n");
-	print_file(file);
+	//printf("ADJ ADDED\n");
+	//print_file(file);
 	//rm_modified(file, size);
-	printf("OLD REMOVED\n");
-	print_file(file);
-	printf("\n");
+	//printf("OLD REMOVED\n");
+	//print_file(file);
+	//printf("\n");
 }
 
 void	modif_dv(t_anthill *anthill, t_file **file, int dv)

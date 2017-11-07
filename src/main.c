@@ -23,8 +23,9 @@ int	main(void)
 	parsing(anthill);
 	check_error(anthill);
 	send_scout(anthill);
-	print_adj(anthill);
+	//print_adj(anthill);
 	check_no_path(anthill);
+	printf("\n");
 	ants_attack(anthill);
 	free_anthill(&anthill);
 	return (0);

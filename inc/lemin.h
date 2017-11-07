@@ -100,7 +100,7 @@ void	add_adj_file(t_anthill *anthill, t_file **file, int size);
 ** Solve.c
 */
 void	ants_attack(t_anthill *anthill);
-void	move_ants(t_anthill *anthill, char **ants_tab);
+int		move_ants(t_anthill *anthill, char **ants_tab, int ant);
 int		check_end(t_anthill *anthill, char **ants_tab);
 char	*get_next_room(t_anthill *anthill, char *cur_room);
 
@@ -152,7 +152,7 @@ int	no_pipes(t_anthill *anthill);
 */
 void	error(void);
 t_room_list	*get_room_prop(t_anthill *anthill, char *name);
-void print_pos(t_anthill *anthill, char **ants_tab);
+void print_pos(char **ants_tab, int ant);
 
 /*
 ** Free_ressources.c

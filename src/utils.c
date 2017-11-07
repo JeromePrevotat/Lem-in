@@ -27,17 +27,9 @@ t_room_list	*get_room_prop(t_anthill *anthill, char *name)
 	return (NULL);
 }
 
-void print_pos(t_anthill *anthill, char **ants_tab)
+void print_pos(char **ants_tab, int ant)
 {
-	int	i;
-
-	i = 0;
-	while (i < anthill->ants)
-	{
-		printf("ANTS : %d // POS : %s\n", i, ants_tab[i]);
-		i++;
-	}
-	printf("\n");
+	printf("L%d-%s ", ant + 1, ants_tab[ant]);
 }
 
 void error(void)

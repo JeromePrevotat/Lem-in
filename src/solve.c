@@ -23,13 +23,20 @@ void	ants_attack(t_anthill *anthill)
 	while (i < anthill->ants)
 	{
 		ants_tab[i] = ft_strdup(anthill->start);
+		print_pos(ants_tab, i);
 		i++;
 	}
-	print_pos(anthill, ants_tab);
+	printf("\n");
 	while (check_end(anthill, ants_tab) == FALSE)
 	{
-		move_ants(anthill, ants_tab);
-		print_pos(anthill, ants_tab);
+		i = 0;
+		while (i < anthill->ants)
+		{
+			if (move_ants(anthill, ants_tab, i) == TRUE)
+				print_pos(ants_tab, i);
+			i++;
+		}
+		printf("\n");
 	}
 	i = 0;
 	while (i < anthill->ants)
@@ -40,38 +47,36 @@ void	ants_attack(t_anthill *anthill)
 	free(ants_tab);
 }
 
-void move_ants(t_anthill *anthill, char **ants_tab)
+int		move_ants(t_anthill *anthill, char **ants_tab, int ant)
 {
-	int		i;
 	char	*next;
+	char	*cur_room;
 
-	i = 0;
-	while (i < anthill->ants)
+	if (ft_strcmp(ants_tab[ant], anthill->end) != 0)
 	{
-		if (ft_strcmp(ants_tab[i], anthill->end) != 0)
+		cur_room = ft_strdup(ants_tab[ant]);
+		next = get_next_room(anthill, ants_tab[ant]);
+		if (ft_strcmp(cur_room, next) == 0)
+			return (FALSE);
+		to_lst_start(&anthill->rooms);
+		while (ft_strcmp(anthill->rooms->room->name, ants_tab[ant]) != 0)
+			anthill->rooms = anthill->rooms->next;
+		anthill->rooms->room->full = FALSE;
+		if (ants_tab[ant] != NULL)
 		{
-			next = get_next_room(anthill, ants_tab[i]);
+			free(ants_tab[ant]);
+			ants_tab[ant] = next;
 			to_lst_start(&anthill->rooms);
-			while (ft_strcmp(anthill->rooms->room->name, ants_tab[i]) != 0)
+			while (anthill->rooms->next != NULL
+				&& ft_strcmp(anthill->rooms->room->name, ants_tab[ant]) != 0)
 				anthill->rooms = anthill->rooms->next;
-			anthill->rooms->room->full = FALSE;
-			if (ants_tab[i] != NULL)
-			{
-				free(ants_tab[i]);
-				ants_tab[i] = next;
-				to_lst_start(&anthill->rooms);
-				while (anthill->rooms->next != NULL
-					&& ft_strcmp(anthill->rooms->room->name, ants_tab[i]) != 0)
-				{
-					anthill->rooms = anthill->rooms->next;
-				}
-				if (ft_strcmp(anthill->rooms->room->name, anthill->start) != 0
-					&& ft_strcmp(anthill->rooms->room->name, anthill->end) != 0)
+			if (ft_strcmp(anthill->rooms->room->name, anthill->start) != 0
+				&& ft_strcmp(anthill->rooms->room->name, anthill->end) != 0)
 				anthill->rooms->room->full = TRUE;
-			}
 		}
-		i++;
+		return (TRUE);
 	}
+	return (FALSE);
 }
 
 char	*get_next_room(t_anthill *anthill, char *cur_room)
