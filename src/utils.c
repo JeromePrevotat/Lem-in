@@ -35,5 +35,5 @@ void print_pos(char **ants_tab, int ant)
 void error(void)
 {
 	ft_putstr_fd("Error\n", 2);
-	exit(-1);
+	exit(0);
 }
